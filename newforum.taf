@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<TAF Version="0x02000002">
+  <Comments/>
+  <Program>
+    <ActionRef Ref="header"/>
+    <ActionRef Ref="If">
+      <ActionRef Ref="newforumform"/>
+    </ActionRef>
+    <ActionRef Ref="Else">
+      <ActionRef Ref="Direct_DBMS"/>
+      <ActionRef Ref="formsubmit"/>
+    </ActionRef>
+    <ActionRef Ref="footer"/>
+  </Program>
+  <Actions>
+    <ResultAction ID="header" Sig="null">
+      <ResultsOutput Ref="header.Results"/>
+    </ResultAction>
+    <IfAction Expanded="True" ID="If" Sig="if  ">
+      <Expression><![CDATA[(!LEN('<@ARG NAME=forumname>'))]]></Expression>
+      <ExpressionInfo>
+        <ExpLeft><![CDATA[<@ARG NAME=forumname>]]></ExpLeft>
+        <ExpRight/>
+        <Operator>iemp</Operator>
+      </ExpressionInfo>
+    </IfAction>
+    <ResultAction ID="newforumform" Sig="null">
+      <ResultsOutput Ref="newforumform.Results"/>
+    </ResultAction>
+    <ElseAction Expanded="True" ID="Else" Sig="else"/>
+    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="Direct_DBMS" Sig="cust" UseDevelopmentDataSource="TRUE">
+      <Custom><![CDATA[select * from tsforum.forums where forumname='<@ARG NAME=forumname>';
+]]></Custom>
+      <StartRow>1</StartRow>
+      <EncodeSQL>false</EncodeSQL>
+      <ResultSet Name="ResultSet" Type="Array"/>
+      <ResultsOutput Ref="Direct_DBMS.Results"/>
+      <ErrorOutput Ref="Direct_DBMS.Error"/>
+    </DirectDBMSAction>
+    <ResultAction ID="formsubmit" Sig="null">
+      <ResultsOutput Ref="formsubmit.Results"/>
+    </ResultAction>
+    <ResultAction ID="footer" Sig="null">
+      <ResultsOutput Ref="footer.Results"/>
+    </ResultAction>
+  </Actions>
+  <DataSources>
+    <DataSource ID="localhost">
+      <DSType>ODBC</DSType>
+      <DSN>localhost</DSN>
+      <DBMS/>
+      <Host>localhost</Host>
+      <Database/>
+      <UserInfo Encrypted="True" Encryption="50">
+        <UserName>%04%CFn%E3h%28%26%B6</UserName>
+        <Password>%26%2D0s%AD%29%F1%A2</Password>
+      </UserInfo>
+    </DataSource>
+  </DataSources>
+  <Outputs>
+    <Output ID="header.Results" Type="HTML"><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Forum | Portal</title>
+<meta http-equiv="content-language" content="en-us" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="Forums" />
+<meta name="keywords" content="Forums" />
+<link rel="stylesheet" type="text/css" media="screen" href="screen.css" />
+<!--[if lt ie 7]><link rel="stylesheet" type="text/css" media="screen" href="ie-win.css" /><![endif]-->
+</head>
+<body id="babout">
+<div id="header">
+  <h1>Forum | Portal</h1>
+</div>
+<div id="navigation">
+  <ul>
+    <li id="lhome"><a href="">Home</a></li>
+    <li id="lproducts"><a href="">Products</a></li>
+    <li id="lsolutions"><a href="">Solutions</a></li>
+    <li id="lcontact"><a href="">Contact Us</a></li>
+  </ul>
+</div>]]></Output>
+    <Output ID="newforumform.Results" Type="HTML"><![CDATA[<div id="wrapper">
+  <div id="content-wrapper">
+    <div id="content">
+      <h6>Create New Forum</h6>
+      <blockquote style="float:left">
+	<p>
+		<form action="newforum.taf">
+		<div style="clear:both;float:left">New Forum Name</div>
+		<div style="clear:both;float:left"><input type="text" name="forumname" /></div>
+		<div style="clear:both;float:left">Description</div>
+		<div style="clear:both;float:left"><textarea rows="10" cols="25" name="description"></textarea></div>
+		<div style="clear:both;float:left"><input type="submit" value="Create" />	</div>
+		</form>
+	</p>
+      </blockquote>
+
+<blockquote style="float:left">
+<div><code>Info:</code></div>
+</blockquote>
+     
+    </div>
+  </div>
+]]></Output>
+    <Output ID="Direct_DBMS.Results" Type="HTML"><![CDATA[<@IF EXPR="<@NUMROWS> = 0">
+Insert!
+<@ELSE>
+Record Already Exists
+</@IF>]]></Output>
+    <Output ID="Direct_DBMS.Error" Type="HTML">error</Output>
+    <Output ID="formsubmit.Results" Type="HTML"><![CDATA[<div id="wrapper">
+  <div id="content-wrapper">
+    <div id="content">
+      <h6>New Forum Name</h6>
+      <blockquote>
+	<p>
+		you entered <@ARG NAME="forumname"><br/>
+		and <@ARG NAME="description"><br/>
+		
+	</p>
+      </blockquote>
+      <pre><code>Info: <div id="info">you entered <@ARG NAME="forumname"></div></code></pre>
+    </div>
+  </div>
+
+]]></Output>
+    <Output ID="footer.Results" Type="HTML"><![CDATA[  <div id="sidebar-wrapper">
+    <div id="sidebar">
+      <h3>Search</h3>
+      <ul>
+      Search All Posts
+      <form action="">
+      <input type="text" />
+      <input type="submit" value="Submit" />
+      </form>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div id="footer">
+  <p>Copyright &copy; 2015 Spencer Bartz. All rights reserved. </p>
+  <p> <a href="#">Terms of Service</a> | <a href="#">Privacy</a> | <a href="#">Contact</a> | <a href="#">About</a> | <a href="http://validator.w3.org/check/referer" title="Valid XHTML 1.0 Strict">XHTML validation</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer?warning=no&amp;profile=css2" title="Valid CSS 2.0 Strict">CSS validation</a> </p>
+</div>
+</body>
+</html>]]></Output>
+  </Outputs>
+</TAF>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<WitangoProject>
+  <Properties>
+    <Title>Forums</Title>
+    <Version>1.0</Version>
+    <Author>Spencer Bartz</Author>
+    <Company/>
+    <Description/>
+  </Properties>
+  <Files Expanded="True">
+    <File>
+      <Name>ie-win.css</Name>
+      <Path><![CDATA[.\ie-win.css]]></Path>
+    </File>
+    <File>
+      <Name>index.html</Name>
+      <Path><![CDATA[.\index.html]]></Path>
+    </File>
+    <File>
+      <Name>screen.css</Name>
+      <Path><![CDATA[.\screen.css]]></Path>
+    </File>
+  </Files>
+  <Presentation Expanded="False"/>
+  <Objects Expanded="False"/>
+  <Datasources Expanded="True">
+    <Datasource>
+      <Name>localhost</Name>
+      <Type>ODBC</Type>
+    </Datasource>
+  </Datasources>
+  <Sites Expanded="False"/>
+</WitangoProject>
