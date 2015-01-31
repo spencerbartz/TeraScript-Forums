@@ -2,13 +2,13 @@
 <TAF Version="0x02000002">
   <Comments/>
   <Program>
-    <ActionRef Ref="home"/>
+    <ActionRef Ref="header"/>
     <ActionRef Ref="Search"/>
-    <ActionRef Ref="Results"/>
+    <ActionRef Ref="footer"/>
   </Program>
   <Actions>
-    <ResultAction ID="home" Sig="null">
-      <ResultsOutput Ref="home.Results"/>
+    <ResultAction ID="header" Sig="null">
+      <ResultsOutput Ref="header.Results"/>
     </ResultAction>
     <SearchAction DSID="localhost" DeploymentDSID="" ID="Search" Sig="srch" UseDevelopmentDataSource="TRUE">
       <Tables>
@@ -27,6 +27,10 @@
           <TableName>forums</TableName>
           <ColumnName>description</ColumnName>
         </Column>
+        <Column ColumnType="0" DataType="tims">
+          <TableName>forums</TableName>
+          <ColumnName>datecreated</ColumnName>
+        </Column>
       </DataDictionary>
       <SearchColumns>
         <ColumnReference>
@@ -41,6 +45,10 @@
           <TableName>forums</TableName>
           <ColumnName>description</ColumnName>
         </ColumnReference>
+        <ColumnReference>
+          <TableName>forums</TableName>
+          <ColumnName>datecreated</ColumnName>
+        </ColumnReference>
       </SearchColumns>
       <OrderColumns/>
       <GroupColumns/>
@@ -48,8 +56,8 @@
       <ResultSet Name="ResultSet" Type="Array"/>
       <ResultsOutput Ref="Search.Results"/>
     </SearchAction>
-    <ResultAction ID="Results" Sig="null">
-      <ResultsOutput Ref="Results.Results"/>
+    <ResultAction ID="footer" Sig="null">
+      <ResultsOutput Ref="footer.Results"/>
     </ResultAction>
   </Actions>
   <DataSources>
@@ -66,42 +74,45 @@
     </DataSource>
   </DataSources>
   <Outputs>
-    <Output ID="home.Results" Type="HTML"><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <Output ID="header.Results" Type="HTML"><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title>Forum | Portal</title>
-<meta http-equiv="content-language" content="en-us" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="description" content="Forums" />
-<meta name="keywords" content="Forums" />
-<link rel="stylesheet" type="text/css" media="screen" href="screen.css" />
-<!--[if lt ie 7]><link rel="stylesheet" type="text/css" media="screen" href="ie-win.css" /><![endif]-->
+	<title>Forum | Portal</title>
+	<meta http-equiv="content-language" content="en-us" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Forums" />
+	<meta name="keywords" content="Forums" />
+	<link rel="stylesheet" type="text/css" media="screen" href="screen.css" />
+	<!--[if lt ie 7]><link rel="stylesheet" type="text/css" media="screen" href="ie-win.css" /><![endif]-->
 </head>
+
 <body id="babout">
-<div id="header">
-  <h1>Forum | Portal</h1>
-</div>
-<div id="navigation">
-  <ul>
-    <li id="lhome"><a href="">Home</a></li>
-    <li id="lproducts"><a href="">Products</a></li>
-    <li id="lsolutions"><a href="">Solutions</a></li>
-    <li id="lcontact"><a href="">Contact Us</a></li>
-  </ul>
-</div>
-<div id="wrapper">
-  <div id="content-wrapper">
-    <div id="content">]]></Output>
+	<div id="header">
+		<h1>Forum | Portal</h1>
+	</div>
+	<div id="navigation">
+  		<ul>
+    		<li id="lhome"><a href="home.taf">Home</a></li>
+    		<li id="lproducts"><a href="products.taf">Products</a></li>
+    		<li id="lsolutions"><a href="services.taf">Services</a></li>
+    		<li id="lcontact"><a href="contact.taf">Contact</a></li>
+		</ul>
+	</div>
+	<div id="wrapper">
+		<div id="content-wrapper">
+			<div id="content">]]></Output>
     <Output ID="Search.Results" Type="HTML"><![CDATA[<h4>Forum List</h4>
 
 <dl>
 	<@ROWS>
 	<dt><a href="topics.taf?forumid=<@COLUMN 'forums.forumid'>"><@COLUMN 'forums.forumname'></a></dt>
-	<dd><@COLUMN 'forums.description'></dd>
+	<dd><@COLUMN 'forums.description'>
+	<div style="float:right"><@COLUMN 'forums.datecreated'></div>
+	</dd>
 	</@ROWS>
 	<dt><a href="newforum.taf">Create a new forum</a></dt>
 </dl>]]></Output>
-    <Output ID="Results.Results" Type="HTML"><![CDATA[    </div>
+    <Output ID="footer.Results" Type="HTML"><![CDATA[    </div>
   </div>
 </div>
 <div id="footer">

@@ -2,12 +2,20 @@
 <WitangoProject>
   <Properties>
     <Title>Forums</Title>
-    <Version>1.0</Version>
+    <Version/>
     <Author>Spencer Bartz</Author>
     <Company/>
     <Description/>
   </Properties>
   <Files Expanded="True">
+    <File>
+      <Name>forum.taf</Name>
+      <Path><![CDATA[.\forum.taf]]></Path>
+    </File>
+    <File>
+      <Name>home.taf</Name>
+      <Path><![CDATA[.\home.taf]]></Path>
+    </File>
     <File>
       <Name>ie-win.css</Name>
       <Path><![CDATA[.\ie-win.css]]></Path>
@@ -17,8 +25,20 @@
       <Path><![CDATA[.\index.html]]></Path>
     </File>
     <File>
+      <Name>newforum.taf</Name>
+      <Path><![CDATA[.\newforum.taf]]></Path>
+    </File>
+    <File>
       <Name>screen.css</Name>
       <Path><![CDATA[.\screen.css]]></Path>
+    </File>
+    <File>
+      <Name>topics.taf</Name>
+      <Path><![CDATA[.\topics.taf]]></Path>
+    </File>
+    <File>
+      <Name>util.js</Name>
+      <Path><![CDATA[.\js\util.js]]></Path>
     </File>
   </Files>
   <Presentation Expanded="False"/>

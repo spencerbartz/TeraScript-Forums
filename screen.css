@@ -29,7 +29,7 @@ h4 { font-size: 20px; }
 
 h5, h6 { font-size: 17px; }
 
-ul, ol, dl, blockquote, pre
+ul, ol, blockquote, pre
 {
 	color: #999999;
 	margin: 10px 35px; 
@@ -38,6 +38,18 @@ ul, ol, dl, blockquote, pre
 	border: 1px solid #1a1a1a;
 	border-top: 10px solid #151515;
 	background: #404040 url(images/navigation_hover.gif) top left repeat;
+}
+
+dl
+{
+	color: #999999;
+	margin: 10px 35px; 
+	padding: 10px 30px; 
+	line-height: 1.6em;
+	border: 1px solid #1a1a1a;
+	border-top: 10px solid #151515;
+	background: #404040 url(images/navigation_hover.gif) top left repeat;
+	width: 100%;
 }
 
 p { margin: 0; }
@@ -247,3 +259,16 @@ body#babout li#labout a
 #footer a:visited { color: #666666; font-weight: bold; border-bottom: 1px dotted #666666; }
 
 #footer a:hover, #footer a:active { color: #999999; border-bottom: 1px solid #999999; }
+
+div.infobox
+{
+	text-align: left;
+	display:inline-block;
+}
+
+div.infoheader
+{
+	text-decoration: underline;
+	text-align: left;
+	display:inline-block;
+}
