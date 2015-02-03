@@ -1,39 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<TAF Debug="True" Version="0x02000002">
+<TAF Version="0x02000002">
   <Comments/>
   <Program>
     <ActionRef Ref="header"/>
-    <ActionRef Ref="get_forum_name"/>
     <ActionRef Ref="footer"/>
   </Program>
   <Actions>
     <ResultAction ID="header" Sig="null">
       <ResultsOutput Ref="header.Results"/>
     </ResultAction>
-    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="get_forum_name" Sig="cust" UseDevelopmentDataSource="TRUE">
-      <Custom><![CDATA[select forumname from forums where forumid='<@arg name="forumid">';]]></Custom>
-      <StartRow>1</StartRow>
-      <EncodeSQL>false</EncodeSQL>
-      <ResultSet Name="ResultSet" Type="Array"/>
-      <ResultsOutput Ref="get_forum_name.Results"/>
-    </DirectDBMSAction>
     <ResultAction ID="footer" Sig="null">
       <ResultsOutput Ref="footer.Results"/>
     </ResultAction>
   </Actions>
-  <DataSources>
-    <DataSource ID="localhost">
-      <DSType>ODBC</DSType>
-      <DSN>localhost</DSN>
-      <DBMS/>
-      <Host>localhost</Host>
-      <Database/>
-      <UserInfo Encrypted="True" Encryption="50">
-        <UserName>%04%CFn%E3h%28%26%B6</UserName>
-        <Password>%26%2D0s%AD%29%F1%A2</Password>
-      </UserInfo>
-    </DataSource>
-  </DataSources>
+  <DataSources/>
   <Outputs>
     <Output ID="header.Results" Type="HTML"><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -59,22 +39,26 @@
     		<li id="lsolutions"><a href="services.taf">Services</a></li>
     		<li id="lcontact"><a href="contact.taf">Contact</a></li>
 		</ul>
-	</div>
-	<div id="wrapper">
+	</div>]]></Output>
+    <Output ID="footer.Results" Type="HTML"><![CDATA[	<div id="wrapper">
 		<div id="content-wrapper">
-			<div id="content">]]></Output>
-    <Output ID="get_forum_name.Results" Type="HTML"><![CDATA[<@assign name="forumname" value="<@column 'forumname'>">]]></Output>
-    <Output ID="footer.Results" Type="HTML"><![CDATA[			<h6><a href="topics.taf?forumid=<@arg 'forumid'>">[<@var name="forumname">]</a> > New Topic</h6>
-			<ul>
-				<form action="processnewtopic.taf" id="newtopic" method="post" onsubmit="return checkFormFields('newtopic', null);">
+			<div id="content">
+			<h6>Create a New User Account</h6>
+      			<ul>
+				<form action="processnewuser.taf" id="newuser" method="post" onsubmit="return checkFormFields('newuser', 'infobox', null);">
 					<table>
-					<tr><td><div id="errtopicname">Topic Name</td><td><input type="text" name="topicname" /></div></td></tr>
+					<tr><td><div id="erremail">E-Mail</td><td><input type="text" name="email" value="<@arg name="email">" /></div></td></tr>
+					<tr><td><div id="errusername">User Name</td><td><input type="text" name="username" /></div></td></tr>
+					<tr><td><div id="errfirstname">First Name</td><td><input type="text" name="firstname" value="<@arg name="firstname">" /></div></td></tr>
+					<tr><td><div id="errlastname">Last Name</td><td><input type="text" name="lastname" value="<@arg name="lastname">" /></div></td></tr>
+					<tr><td><div id="errpassword">Password</td><td><input type="password" name="password" /></div></td></tr>
+					<tr><td><div id="errreenter">Password (re-enter)</td><td><input type="password" name="reenter" /></div></td></tr>
 					<tr><td></td><td><div style="text-align:right"><input type="submit" value="Submit" /></div></td></tr>
 					</table>
-					<input type="hidden" name="forumid" value="<@arg 'forumid'>" />
 				</form>
 				<div id="infobox"></div>
-    			</div>
+			</ul>
+    		</div>
   		</div>
 
 		<div id="sidebar-wrapper">

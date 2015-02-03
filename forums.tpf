@@ -9,10 +9,6 @@
   </Properties>
   <Files Expanded="True">
     <File>
-      <Name>forum.taf</Name>
-      <Path><![CDATA[.\forum.taf]]></Path>
-    </File>
-    <File>
       <Name>home.taf</Name>
       <Path><![CDATA[.\home.taf]]></Path>
     </File>
@@ -27,6 +23,30 @@
     <File>
       <Name>newforum.taf</Name>
       <Path><![CDATA[.\newforum.taf]]></Path>
+    </File>
+    <File>
+      <Name>newpost.taf</Name>
+      <Path><![CDATA[.\newpost.taf]]></Path>
+    </File>
+    <File>
+      <Name>newtopic.taf</Name>
+      <Path><![CDATA[.\newtopic.taf]]></Path>
+    </File>
+    <File>
+      <Name>newuser.taf</Name>
+      <Path><![CDATA[.\newuser.taf]]></Path>
+    </File>
+    <File>
+      <Name>posts.taf</Name>
+      <Path><![CDATA[.\posts.taf]]></Path>
+    </File>
+    <File>
+      <Name>processnewtopic.taf</Name>
+      <Path><![CDATA[.\processnewtopic.taf]]></Path>
+    </File>
+    <File>
+      <Name>processnewuser.taf</Name>
+      <Path><![CDATA[.\processnewuser.taf]]></Path>
     </File>
     <File>
       <Name>screen.css</Name>

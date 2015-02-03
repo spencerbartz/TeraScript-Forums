@@ -3,31 +3,22 @@
   <Comments/>
   <Program>
     <ActionRef Ref="header"/>
-    <ActionRef Ref="getforumname"/>
-    <ActionRef Ref="querytopicstable"/>
-    <ActionRef Ref="topiclisting"/>
+    <ActionRef Ref="get_forum_and_topic_name"/>
+    <ActionRef Ref="footer"/>
   </Program>
   <Actions>
     <ResultAction ID="header" Sig="null">
       <ResultsOutput Ref="header.Results"/>
     </ResultAction>
-    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="getforumname" Sig="cust" UseDevelopmentDataSource="TRUE">
-      <Custom><![CDATA[select forumname from forums where forumid='<@ARG name="forumid">';]]></Custom>
+    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="get_forum_and_topic_name" Sig="cust" UseDevelopmentDataSource="TRUE">
+      <Custom><![CDATA[select forums.forumname, topics.topicname from forums, topics where forums.forumid='<@arg 'forumid'>' and topics.topicid='<@arg 'topicid'>';]]></Custom>
       <StartRow>1</StartRow>
       <EncodeSQL>false</EncodeSQL>
       <ResultSet Name="ResultSet" Type="Array"/>
-      <ResultsOutput Ref="getforumname.Results"/>
+      <ResultsOutput Ref="get_forum_and_topic_name.Results"/>
     </DirectDBMSAction>
-    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="querytopicstable" Sig="cust" UseDevelopmentDataSource="TRUE">
-      <Custom><![CDATA[select distinct topics.topicid, topics.topicname, topics.date_created, topics.forumid, users.username, max(if(topics.topicid=posts.topicid, posts.postdate, 0)) as latestpost, sum(if(topics.topicid=posts.topicid and posts.authorid=users.id, 1, 0)) as postcount
-from (topics inner join posts inner join users) where topics.forumid='<@arg name="forumid">' group by topics.topicid;]]></Custom>
-      <StartRow>1</StartRow>
-      <EncodeSQL>false</EncodeSQL>
-      <ResultSet Name="ResultSet" Type="Array"/>
-      <ResultsOutput Ref="querytopicstable.Results"/>
-    </DirectDBMSAction>
-    <ResultAction ID="topiclisting" Sig="null">
-      <ResultsOutput Ref="topiclisting.Results"/>
+    <ResultAction ID="footer" Sig="null">
+      <ResultsOutput Ref="footer.Results"/>
     </ResultAction>
   </Actions>
   <DataSources>
@@ -72,15 +63,18 @@ from (topics inner join posts inner join users) where topics.forumid='<@arg name
 	<div id="wrapper">
 		<div id="content-wrapper">
 			<div id="content">]]></Output>
-    <Output ID="getforumname.Results" Type="HTML"><![CDATA[<h4>Topic List for the [<@COLUMN 'forums.forumname'>] forum</h4>]]></Output>
-    <Output ID="querytopicstable.Results" Type="HTML"><![CDATA[			<dl>
-				<@ROWS>
-				<dt><a href="posts.taf?forumid=<@COLUMN 'topics.forumid'>&topicid=<@COLUMN 'topics.topicid'>"><@COLUMN 'topics.topicname'></a></dt>
-				<dd>Started by <@COLUMN 'users.username'> on <@COLUMN 'topics.date_created'> | # Posts: <@COLUMN 'postcount'> | Last Updated: <@COLUMN 'latestpost'></dd>
-				</@ROWS>
-				<dd><a href="newtopic.taf?forumid=<@ARG name=forumid>">Start a new topic</a> | <a href="home.taf">Back to forums</a></dd>
-			</dl>]]></Output>
-    <Output ID="topiclisting.Results" Type="HTML"><![CDATA[    		</div>
+    <Output ID="get_forum_and_topic_name.Results" Type="HTML"><![CDATA[<h4><a href="topics.taf?forumid=<@arg name="forumid">">[<@column 'forums.forumname'>]</a> > <a href="posts.taf?forumid=<@arg name="forumid">&topicid=<@arg name="topicid">">[<@column 'topics.topicname'>]</a> > New Post</h4>]]></Output>
+    <Output ID="footer.Results" Type="HTML"><![CDATA[				<ul>
+				<form action="processnewpost.taf" id="newpost" method="post" onsubmit="return checkFormFields('newpost', 'infobox', null);">
+					<div id="errposttext">Comment:</div> 
+					<textarea name="posttext"></textarea><br/>
+					<input type="submit" value="Submit" />
+					<input type="hidden" name="forumid" value="<@arg 'forumid'>" />
+					<input type="hidden" name="topicid" value="<@arg 'topicid'>" />
+				</form>
+				<div id="infobox"></div>
+				</ul>
+    			</div>
   		</div>
 
 		<div id="sidebar-wrapper">

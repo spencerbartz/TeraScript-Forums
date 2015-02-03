@@ -112,22 +112,16 @@
   <div id="content-wrapper">
     <div id="content">
       <h6>Create New Forum</h6>
-      <blockquote style="float:left">
-	<p>
+	<ul>
 		<form action="newforum.taf" id="newforum" method="post" onsubmit="return checkFormFields('newforum', 'infobox', null);">
-		<div id="errforumname"><div style="clear:both;float:left">New Forum Name</div></div>
-		<div style="clear:both;float:left"><input type="text" name="forumname" /></div>
+		<div id="errforumname"><div>New Forum Name</div></div>
+		<div><input type="text" name="forumname" /></div>
 		<div id="errdescription"><div style="clear:both;float:left">Description</div></div>
-		<div style="clear:both;float:left"><textarea rows="5" cols="25" name="description"></textarea></div>
-		<div style="clear:both;float:left"><input type="submit" value="Create" />	</div>
+		<div><textarea rows="5" cols="25" name="description"></textarea></div>
+		<div><input type="submit" value="Create" /></div>
 		</form>
-	</p>
-      </blockquote>
-
-<blockquote style="float:left">
-<div id="infobox" class="infobox" style="float:left">Info:</div>
-</blockquote>
-     
+		<div id="infobox" class="infobox"></div>
+	</ul>
     </div>
   </div>
 ]]></Output>

@@ -3,14 +3,14 @@
   <Comments/>
   <Program>
     <ActionRef Ref="header"/>
-    <ActionRef Ref="Search"/>
+    <ActionRef Ref="get_forums"/>
     <ActionRef Ref="footer"/>
   </Program>
   <Actions>
     <ResultAction ID="header" Sig="null">
       <ResultsOutput Ref="header.Results"/>
     </ResultAction>
-    <SearchAction DSID="localhost" DeploymentDSID="" ID="Search" Sig="srch" UseDevelopmentDataSource="TRUE">
+    <SearchAction DSID="localhost" DeploymentDSID="" ID="get_forums" Sig="srch" UseDevelopmentDataSource="TRUE">
       <Tables>
         <TableName>forums</TableName>
       </Tables>
@@ -54,7 +54,7 @@
       <GroupColumns/>
       <StartRow>1</StartRow>
       <ResultSet Name="ResultSet" Type="Array"/>
-      <ResultsOutput Ref="Search.Results"/>
+      <ResultsOutput Ref="get_forums.Results"/>
     </SearchAction>
     <ResultAction ID="footer" Sig="null">
       <ResultsOutput Ref="footer.Results"/>
@@ -82,6 +82,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="description" content="Forums" />
 	<meta name="keywords" content="Forums" />
+	<script type="text/javascript" src="js/util.js"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="screen.css" />
 	<!--[if lt ie 7]><link rel="stylesheet" type="text/css" media="screen" href="ie-win.css" /><![endif]-->
 </head>
@@ -101,7 +102,7 @@
 	<div id="wrapper">
 		<div id="content-wrapper">
 			<div id="content">]]></Output>
-    <Output ID="Search.Results" Type="HTML"><![CDATA[<h4>Forum List</h4>
+    <Output ID="get_forums.Results" Type="HTML"><![CDATA[<h4>Forum List</h4>
 
 <dl>
 	<@ROWS>
@@ -114,6 +115,34 @@
 </dl>]]></Output>
     <Output ID="footer.Results" Type="HTML"><![CDATA[    </div>
   </div>
+
+	<div id="sidebar-wrapper">
+		<div id="sidebar">
+			<h3>Search</h3>
+			<ul>
+				<table>
+				<form id="search" action="search.taf" method="post" onsubmit="return checkFormFields('search', 'infobox', null);">
+					<tr><td><div id="errsearchstr">Search String:</td><td><input type="text" name="searchstr" /></div></td></tr>
+					<tr><td></td><td><div style="text-align:right"><input type="submit" value="Search" /></div></td></tr>
+				</form>
+				</table>
+				<div id="infobox"></div>
+			</ul>
+			<h3>Account Login</h3>
+			<ul>
+				<table>
+				<form id="login" action="processlogin.taf" method="post" onsubmit="return checkFormFields('login', 'infobox2', null);">
+					<tr><td><div id="errusername">Username:</td><td><input type="text" name="username" /></div></td></tr>
+					<tr><td><div id="errpassword">Password:</td><td><input type="password" name="password" /></div></td></tr>
+					<tr><td></td><td><div style="text-align:right"><input type="submit" value="Login" /></div></td></tr>
+				</form>
+				</table>
+				<div id="infobox2"></div><br/>
+				Don't have an account? <a href="newuser.taf">Sign up today!</a>
+			</ul>
+		</div>
+	</div>
+
 </div>
 <div id="footer">
   <p>Copyright &copy; 2015 Spencer Bartz. All rights reserved. </p>

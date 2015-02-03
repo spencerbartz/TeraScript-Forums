@@ -3,31 +3,49 @@
   <Comments/>
   <Program>
     <ActionRef Ref="header"/>
-    <ActionRef Ref="getforumname"/>
-    <ActionRef Ref="querytopicstable"/>
-    <ActionRef Ref="topiclisting"/>
+    <ActionRef Ref="chec_username_exists"/>
+    <ActionRef Ref="If">
+      <ActionRef Ref="insert_user"/>
+    </ActionRef>
+    <ActionRef Ref="Else">
+      <ActionRef Ref="error_user_exists"/>
+    </ActionRef>
+    <ActionRef Ref="footer"/>
   </Program>
   <Actions>
     <ResultAction ID="header" Sig="null">
       <ResultsOutput Ref="header.Results"/>
     </ResultAction>
-    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="getforumname" Sig="cust" UseDevelopmentDataSource="TRUE">
-      <Custom><![CDATA[select forumname from forums where forumid='<@ARG name="forumid">';]]></Custom>
+    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="chec_username_exists" Sig="cust" UseDevelopmentDataSource="TRUE">
+      <Custom><![CDATA[select * from users where username='<@arg name="username">';]]></Custom>
       <StartRow>1</StartRow>
       <EncodeSQL>false</EncodeSQL>
       <ResultSet Name="ResultSet" Type="Array"/>
-      <ResultsOutput Ref="getforumname.Results"/>
     </DirectDBMSAction>
-    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="querytopicstable" Sig="cust" UseDevelopmentDataSource="TRUE">
-      <Custom><![CDATA[select distinct topics.topicid, topics.topicname, topics.date_created, topics.forumid, users.username, max(if(topics.topicid=posts.topicid, posts.postdate, 0)) as latestpost, sum(if(topics.topicid=posts.topicid and posts.authorid=users.id, 1, 0)) as postcount
-from (topics inner join posts inner join users) where topics.forumid='<@arg name="forumid">' group by topics.topicid;]]></Custom>
+    <IfAction Expanded="True" ID="If" Sig="if  ">
+      <Expression><![CDATA[('<@numrows>'='0')]]></Expression>
+      <ExpressionInfo>
+        <ExpLeft><![CDATA[<@numrows>]]></ExpLeft>
+        <ExpRight>0</ExpRight>
+        <Operator>iseq</Operator>
+      </ExpressionInfo>
+    </IfAction>
+    <DirectDBMSAction DSID="localhost" DeploymentDSID="" ID="insert_user" Sig="cust" UseDevelopmentDataSource="TRUE">
+      <Custom><![CDATA[insert into users 
+values(NULL, '<@arg name="username">',MD5('<@arg name="password">'), 
+'<@arg name="firstname">', '<@arg name="lastname">', '<@arg name="email">', 'blah'); ]]></Custom>
       <StartRow>1</StartRow>
       <EncodeSQL>false</EncodeSQL>
       <ResultSet Name="ResultSet" Type="Array"/>
-      <ResultsOutput Ref="querytopicstable.Results"/>
+      <ResultsOutput Ref="insert_user.Results"/>
+      <ErrorOutput Ref="insert_user.Error"/>
     </DirectDBMSAction>
-    <ResultAction ID="topiclisting" Sig="null">
-      <ResultsOutput Ref="topiclisting.Results"/>
+    <ElseAction Expanded="True" ID="Else" Sig="else"/>
+    <ResultAction ID="error_user_exists" Sig="null">
+      <ResultsOutput Ref="error_user_exists.Results"/>
+    </ResultAction>
+    <ResultAction ID="footer" Sig="null">
+      <ResultsOutput Ref="footer.Results"/>
     </ResultAction>
   </Actions>
   <DataSources>
@@ -72,15 +90,20 @@ from (topics inner join posts inner join users) where topics.forumid='<@arg name
 	<div id="wrapper">
 		<div id="content-wrapper">
 			<div id="content">]]></Output>
-    <Output ID="getforumname.Results" Type="HTML"><![CDATA[<h4>Topic List for the [<@COLUMN 'forums.forumname'>] forum</h4>]]></Output>
-    <Output ID="querytopicstable.Results" Type="HTML"><![CDATA[			<dl>
-				<@ROWS>
-				<dt><a href="posts.taf?forumid=<@COLUMN 'topics.forumid'>&topicid=<@COLUMN 'topics.topicid'>"><@COLUMN 'topics.topicname'></a></dt>
-				<dd>Started by <@COLUMN 'users.username'> on <@COLUMN 'topics.date_created'> | # Posts: <@COLUMN 'postcount'> | Last Updated: <@COLUMN 'latestpost'></dd>
-				</@ROWS>
-				<dd><a href="newtopic.taf?forumid=<@ARG name=forumid>">Start a new topic</a> | <a href="home.taf">Back to forums</a></dd>
-			</dl>]]></Output>
-    <Output ID="topiclisting.Results" Type="HTML"><![CDATA[    		</div>
+    <Output ID="insert_user.Results" Type="HTML"><![CDATA[		<h4>Successfully Created User</h4>
+			<dl>
+				<dt>Account Details</dt>
+				<li>Email: <@arg name="email"></li>
+				<li>User name: <@arg name="username"></li>
+				<li>First name: <@arg name="firstname"></li>
+				<li>Last name: <@arg name="lastname"></li>
+			</ul>]]></Output>
+    <Output ID="insert_user.Error" Type="HTML">Error</Output>
+    <Output ID="error_user_exists.Results" Type="HTML"><![CDATA[		<h4>Error: That user name already exists</h4>
+			<ul>
+				<a href="newuser.taf?email=<@arg name="email">&firstname=<@arg name="firstname">&lastname=<@arg name="lastname">">Try again</a>
+			</ul>]]></Output>
+    <Output ID="footer.Results" Type="HTML"><![CDATA[    		</div>
   		</div>
 
 		<div id="sidebar-wrapper">

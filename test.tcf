@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<TCF Version="0x02000002">
+  <Comments/>
+  <Classes>
+    <ClassDef>
+      <Name>Class1</Name>
+      <On_Create>
+        <Implementation/>
+      </On_Create>
+      <On_Destroy>
+        <Implementation/>
+      </On_Destroy>
+      <Methods>
+        <MethodDef>
+          <Name>test</Name>
+          <MethodParameterList/>
+          <Implementation>
+            <ActionRef Ref="Class1.test.If"/>
+          </Implementation>
+          <ReturnValueName>returnValue</ReturnValueName>
+          <ReturnValueType>Any</ReturnValueType>
+        </MethodDef>
+      </Methods>
+      <Variables/>
+    </ClassDef>
+  </Classes>
+  <Actions>
+    <IfAction ID="Class1.test.If" Sig="if  ">
+      <Expression><![CDATA[('1'='1')]]></Expression>
+      <ExpressionInfo>
+        <ExpLeft>1</ExpLeft>
+        <ExpRight>1</ExpRight>
+        <Operator>iseq</Operator>
+      </ExpressionInfo>
+    </IfAction>
+  </Actions>
+  <DataSources/>
+  <Outputs/>
+</TCF>
